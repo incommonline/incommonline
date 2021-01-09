@@ -1,0 +1,22 @@
+{
+  "name": "incommon",
+  "version": "0.1.0",
+  "description": "incommon is a web app to connect people with niche interests within a larger group",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/incommonline/incommonline.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/incommonline/incommonline/issues"
+  },
+  "homepage": "https://github.com/incommonline/incommonline#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
