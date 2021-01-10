@@ -25,7 +25,7 @@ export default function RoomsPageApp() {
 
         if( roomName === "" ) { return; }
 
-        roomsWithName = rooms.filter( room => room.name === roomName );
+        let roomsWithName = rooms.filter( room => room.name === roomName );
 
         if( roomsWithName === undefined || roomsWithName.length == 0 ) {
             setCreatedFailed( true );
@@ -45,7 +45,7 @@ export default function RoomsPageApp() {
         const date = new Date();
     
         let roomId = base64_encoder.encode( roomName + date.getMilliseconds() );
-        let room = { id: id, name: name };
+        let room = { id: roomId, name: roomName };
 
         if ( rooms.includes( room ) === false ) {
             setRooms( [...rooms, room] );
