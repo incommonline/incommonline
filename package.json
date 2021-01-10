@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
+    "base64-string": "^1.1.2",
     "express": "^4.17.1",
     "react": "16.x",
     "react-bootstrap": "^1.4.3",

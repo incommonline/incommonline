@@ -17,8 +17,8 @@ function getRoomDetails( roomId, userId ) {
     otherUsers: [ "Weiyoung", "Bereket" ],
     roomId: roomId,
     roomName: "Choral Reef",
-    myNiches: [ { nicheId: "biiTCxey", nicheName: "K-Pop", currentSupport: 1, supportRequired: 4, memberIds: null }, { nicheId: "abcdefgh", nicheName: "Vocal Jazz", currentSupport: 3, supportRequired: 3, memberIds: [ "1a2b3c4d", "2a3b4c5d" ] } ],
-    otherNiches: [ { nicheId: "TWwyAzRd", nicheName: "Hockey", currentSupport: 3, supportRequired: 4 } ]
+    myNiches: [ { nicheName: "K-Pop", currentSupport: 1, supportRequired: 4, memberIds: null }, { nicheId: "abcdefgh", nicheName: "Vocal Jazz", currentSupport: 3, supportRequired: 3, members: [ "Weiyoung", "Dominic S.", "Bereket" ] } ],
+    otherNiches: [ { nicheName: "Hockey", currentSupport: 3, supportRequired: 4 } ]
   };
 }
 
@@ -65,7 +65,7 @@ function UserRoom( props ) {
                   </Tab>
                   <Tab eventKey="myNiches" title="My Niches" style={ { padding: "10px" } }>
                     <ListGroup>
-                      { roomInfo.myNiches.map( niche => <ListGroupItem>{niche.nicheName} <span style={{ float: "right" } }> { niche.currentSupport >= niche.supportRequired ? "✔" : niche.currentSupport + "/" + niche.supportRequired } </span></ListGroupItem> ) }
+                      { roomInfo.myNiches.map( niche => <ListGroupItem>{niche.nicheName} <span style={{ float: "right" } }> { niche.currentSupport >= niche.supportRequired ? "✔ " : niche.currentSupport + "/" + niche.supportRequired } </span></ListGroupItem> ) }
                     </ListGroup>
                   </Tab>
                 </Tabs>
