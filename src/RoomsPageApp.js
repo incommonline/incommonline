@@ -64,12 +64,13 @@ export default function RoomsPageApp() {
                 <Form.Group onSubmit={ event => event.preventDefault() }>
                     <Form.Label>Create a room or join an existing room here!</Form.Label>
                     <Form.Control placeholder="Enter the room name" onChange={ event => setRoom( event.target.value ) } />
+                    
+                    { joinFailed ? <p style={ { color: "red", fontSize: "small" } }>No room with this name exists.</p> : "" }
+                    { createdFailed ? <p style={ { color: "red", fontSize: "small" } }>A room with this name already exists.</p> : "" }
+                    { createdId ? <p style={ { color: "green", fontSize: "small" } }>Created a room at <a href={createdId}>{window.location.host}/{createdId}</a>. Share this with your friends!</p> : "" }
                 </Form.Group>
 
-                { joinFailed ? <p style={ { color: "red" } }>No room with this name exists.</p> : "" }
-                { createdFailed ? <p style={ { color: "red" } }>A room with this name already exists.</p> : "" }
-                { createdId ? <p style={ { color: "green" } }>Created a room at <span href={createdId}>incommon.online/{createdId}</span> </p> : "" }
-
+                
                 <Button variant="primary" className="mr-2" onClick={ onRoomJoin }>Join a room</Button>
                 <Button variant="primary" className="mr-2" onClick={ onRoomCreate }>Create a room</Button>
             </Form>

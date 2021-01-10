@@ -39,8 +39,10 @@ export default function UserPage( props ) {
               <Form onSubmit={ event => event.preventDefault() }>
                 <Form.Group>
                   <Form.Control placeholder="I'm interested in..." onChange={ event => setNicheName( event.target.value ) }/>
-                  <Button style={ { marginTop: "15px" } } onClick={onClick} type="click" >Add</Button>
+                  { nicheExists ? <p style={ { color: "red", fontSize: "small" } }>Niche already exists.</p> : "" }
                 </Form.Group>
+
+                <Button style={ { marginBottom: "10px" } } onClick={onClick} type="click" >Add</Button>
               </Form>
               </Card>
             </Row>
