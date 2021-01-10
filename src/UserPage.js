@@ -7,6 +7,7 @@ export default function UserPage( props ) {
 
     let [rooms = [], setRooms] = useLocalStorage( "rooms" );
     let [nicheName, setNicheName] = useState();
+    let [nicheExists, setNicheExists] = useState( false );
 
     let room  = rooms.find( room => room.id === roomId );
 
@@ -19,14 +20,14 @@ export default function UserPage( props ) {
     let otherNiches = niches.filter( niche => niche.supporters.some( user => user === thisUser.id ) === false );
 
     let onClick = ( event ) => { 
-
-        let niche = { name: nicheName, supportRequired: 4, supporters: [ thisUser.id ] };
-
-        console.log( niche );
-
-        niches.push( niche );
-
-        setRooms( rooms );
+        let newNiche = { name: nicheName, supportRequired: 4, supporters: [ thisUser.id ] };
+        if( niches.some( niche => niche.name === newNiche.name ) ) {
+            setNicheExists( true );
+        } else {
+            setNicheExists( false );
+            niches.push( newNiche );
+            setRooms( rooms );
+        }
     }
 
     return (
