@@ -2,7 +2,6 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Base64 } from 'base64-string';
-import { getRoomIdFromName } from './SkeletonApi';
 import { useLocalStorage } from '@rehooks/local-storage';
 
 export default function RoomsPageApp() {
@@ -28,7 +27,7 @@ export default function RoomsPageApp() {
         let roomsWithName = rooms.filter( room => room.name === roomName );
 
         if( roomsWithName === undefined || roomsWithName.length == 0 ) {
-            setCreatedFailed( true );
+            setJoinFailed( true );
         } else {
             history.push( '/' + roomsWithName[0].id );
         }
