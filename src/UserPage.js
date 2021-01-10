@@ -23,6 +23,8 @@ export default function UserPage( props ) {
 
     let onClick = ( event ) => { 
         event.preventDefault();
+        
+        document.getElementById("nicheadder").reset();
 
         if( nicheName === undefined ) { return; }
 
@@ -63,7 +65,7 @@ export default function UserPage( props ) {
             <Row>
               <Card style={ { width: "100%", padding: "20px 20px 0px 20px" } }>
               <Card.Title>Add a niche!</Card.Title>
-              <Form onSubmit={ event => event.preventDefault() }>
+              <Form id="nicheadder" onSubmit={ event => event.preventDefault() }>
                 <Form.Group>
                   <Form.Control placeholder="I'm interested in..." onChange={ event => setNicheName( event.target.value ) }/>
                   { nicheExists ? <p style={ { color: "red", fontSize: "small" } }>Niche already exists.</p> : "" }
