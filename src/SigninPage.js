@@ -1,6 +1,6 @@
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { Base64 } from 'base64-string';
 
@@ -8,15 +8,10 @@ import UserPage from './UserPage';
 
 const stringHash = require( "string-hash" );
 
-/* from react-router example */
-function useQuery() {
-  return new URLSearchParams( useLocation().search );
-}
 
 export default function SigninPage() {
   let { roomId } = useParams();
 
-  let query = useQuery();
   let history = useHistory();
 
   let [currentName, setCurrentName] = useState( "" );
