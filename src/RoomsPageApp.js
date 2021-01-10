@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { Base64 } from 'base64-string';
 import { useLocalStorage } from '@rehooks/local-storage';
 
+const stringHash = require("string-hash");
+
 export default function RoomsPageApp() {
     let history = useHistory();
 
@@ -24,12 +26,12 @@ export default function RoomsPageApp() {
 
         if( roomName === "" ) { return; }
 
-        let roomsWithName = rooms.filter( room => room.name === roomName );
+        let roomWithName = rooms.find( room => room.name === roomName );
 
-        if( roomsWithName === undefined || roomsWithName.length == 0 ) {
+        if( roomWithName === undefined ) {
             setJoinFailed( true );
         } else {
-            history.push( '/' + roomsWithName[0].id );
+            history.push( '/' + roomWithName.id );
         }
     }
 
@@ -43,10 +45,10 @@ export default function RoomsPageApp() {
         const base64_encoder = new Base64();
         const date = new Date();
     
-        let roomId = base64_encoder.encode( roomName + date.getMilliseconds() );
-        let room = { id: roomId, name: roomName };
+        let roomId = base64_encoder.encode( stringHash( roomName + date.getMilliseconds ) ).slice( 5, 11 ); 
+        let room = { id: roomId, name: roomName, users: [], niches: [] };
 
-        if ( rooms.includes( room ) === false ) {
+        if ( rooms.some( room => room.name === roomName ) === false ) {
             setRooms( [...rooms, room] );
             setCreatedId( roomId );
         } else {

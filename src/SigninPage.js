@@ -1,10 +1,12 @@
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
+import { Base64 } from 'base64-string';
 
-import { UserPage } from 'UserPage';
-import { getRoomName } from './SkeletonApi';
+import UserPage from './UserPage';
+
+const stringHash = require("string-hash");
 
 /* from react-router example */
 function useQuery() {
@@ -17,27 +19,44 @@ export default function SigninPage() {
   let query = useQuery();
   let history = useHistory();
 
-  let [userId, setUserId] = useLocalStorage("userid");
-  let [created, setCreated] = useLocalStorage("signedin");
-  let [name, setName] = useLocalStorage("username");
+  let [currentName, setCurrentName] = useState( "" );
+  let [rooms = [], setRooms] = useLocalStorage( "rooms" );
 
-  // runs on first round, runs if created changes from false to true
-  useEffect(() => {
-    if(created) {
-      history.push( '/' + roomId + '?userid=' + userId )
-    }
-  }, [created])
+  let room = rooms.find( room => room.id === roomId );
 
-  if( !query.get( 'userid' ) ) {
+  if( room === undefined ) { 
+    history.push( '/' ); return "";
+  }
+
+  let onSubmit = event => {
+    event.preventDefault();
+
+    let foundUser = room.users.find( user => user.name === currentName );
+
+    if( foundUser === undefined ) {
+      const base64_encoder = new Base64();
+      const date = new Date();
+  
+      let userId = base64_encoder.encode( stringHash( currentName + date.getMilliseconds ) ).slice( 5, 11 ); 
+      foundUser = { id: userId, name: currentName, niches: [] };
+      room.users.push( foundUser );
+
+      setRooms( rooms );
+    } 
+
+    history.push( window.location.pathname + '?userid=' + foundUser.id );
+  }
+
+  let userId = query.get( 'userid' );
+
+  if( !userId ) {
     return (
       <Container>
         <Row>
           <Col>
-            <h1>Welcome to {getRoomName( roomId )}. Who are you?</h1> 
-            <Form onSubmit={ event => { event.preventDefault(); setCreated(true);  } }>
-              <Form.Control placeholder="userid" onChange={ event => setUserId( event.target.value ) }/>
-              <Form.Control placeholder="name" onChange={ event => setName( event.target.value ) }/>
-              <Button type="submit">Sign in</Button>
+            <h1>Welcome to {room.name}. Who are you?</h1> 
+            <Form onSubmit={onSubmit}>
+              <Form.Control onChange={ event => setCurrentName( event.target.value ) }/>
             </Form>
           </Col>
         </Row>
@@ -45,7 +64,7 @@ export default function SigninPage() {
     );
   } else {
     return (
-      <UserPage userId={userId} roomId={roomId} name={name}/>
+      <UserPage userId={userId} roomId={roomId}/>
     );
   }
 }
