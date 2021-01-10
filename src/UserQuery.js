@@ -1,6 +1,7 @@
-import { Container, Row, Col, Form, ListGroup, ListGroupItem, Tabs, Tab, Card } from 'react-bootstrap';
-import { useParams, useLocation, useHistory } from 'react-router-dom'
-import { useState } from 'react'
+import { Container, Row, Col, Form, ListGroup, ListGroupItem, Tabs, Tab, Card, Button } from 'react-bootstrap';
+import { useParams, useLocation, useHistory, Redirect } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocalStorage } from '@rehooks/local-storage';
 
 import { getRoomName, getRoomDetails } from './SkeletonApi'
 
@@ -10,7 +11,7 @@ function useQuery() {
 }
 
 function UserRoom( props ) {
-  let roomInfo = getRoomDetails( props.roomId, props.userId );
+  let roomInfo = getRoomDetails( props.roomId, props.userId, props.name);
 
   return (
     <Container>
@@ -71,7 +72,16 @@ export default function UserQuery() {
   let query = useQuery();
   let history = useHistory();
 
-  let [userQueryValue, setUserQueryValue] = useState( "" );
+  let [userId, setUserId] = useLocalStorage("userid");
+  let [created, setCreated] = useLocalStorage("signedin");
+  let [name, setName] = useLocalStorage("username");
+
+  // runs on first round, runs if created changes from false to true
+  useEffect(() => {
+    if(created) {
+      history.push( '/' + roomId + '?userid=' + userId )
+    }
+  }, [created])
 
   if( !query.get( 'userid' ) ) {
     return (
@@ -79,8 +89,10 @@ export default function UserQuery() {
         <Row>
           <Col>
             <h1>Welcome to {getRoomName( roomId )}. Who are you?</h1> 
-            <Form onSubmit={ event => { event.preventDefault(); history.push( '/' + roomId + '?userid=' + userQueryValue ) } }>
-              <Form.Control onChange={ event => setUserQueryValue( event.target.value ) }/>
+            <Form onSubmit={ event => { event.preventDefault(); setCreated(true);  } }>
+              <Form.Control placeholder="userid" onChange={ event => setUserId( event.target.value ) }/>
+              <Form.Control placeholder="name" onChange={ event => setName( event.target.value ) }/>
+              <Button type="submit">Sign in</Button>
             </Form>
           </Col>
         </Row>
@@ -88,7 +100,7 @@ export default function UserQuery() {
     );
   } else {
     return (
-      <UserRoom userId={query.get( "userid" )} roomId={roomId}/>
+      <UserRoom userId={userId} roomId={roomId} name={name}/>
     );
   }
 }

@@ -3,10 +3,10 @@ export function getRoomName( roomId ) {
     return getRoomDetails( roomId, "deadbeef" ).roomName;
 }
   
-export function getRoomDetails( roomId, userId ) {
+export function getRoomDetails( roomId, userId, name ) {
   return {
     currentUserId: userId,
-    currentUserName: "Dominic S.",
+    currentUserName: name,
     otherUsers: [ "Weiyoung", "Bereket" ],
     roomId: roomId,
     roomName: "Choral Reef",
