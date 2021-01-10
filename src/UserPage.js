@@ -44,13 +44,17 @@ export default function UserPage( props ) {
     }
 
     let onPush = ( event, nicheName ) => {
-        let niche = niches.find( niche => niche.name === nicheName );
+        let newRooms = [...rooms];
+
+        let newRoom  = newRooms.find( room => room.id === roomId );
+
+        let niche = newRoom.niches.find( niche => niche.name === nicheName );
 
         if( niche.supporters.some( supporter => supporter.id === thisUser.id ) === false ) {
             niche.supporters.push( thisUser.id );
         }
 
-        setRooms( rooms );
+        setRooms( newRooms );
     }
 
     let logout = () => {
