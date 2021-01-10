@@ -56,7 +56,7 @@ export default function SigninPage() {
           <Col>
             <h1>Welcome to {room.name}. Who are you?</h1> 
             <Form onSubmit={onSubmit}>
-              <Form.Control onChange={ event => setCurrentName( event.target.value ) }/>
+              <Form.Control placeholder="your name" onChange={ event => setCurrentName( event.target.value ) }/>
             </Form>
           </Col>
         </Row>

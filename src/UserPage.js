@@ -1,9 +1,11 @@
 import { Container, Row, Col, Form, Card, Tab, Tabs, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { useState } from 'react';
 
 export default function UserPage( props ) {
     let { roomId, userId } = props;
+    let history = useHistory();
 
     let [rooms = [], setRooms] = useLocalStorage( "rooms" );
     let [nicheName, setNicheName] = useState();
@@ -19,7 +21,7 @@ export default function UserPage( props ) {
     let myNiches = niches.filter( niche => niche.supporters.some( user => user === thisUser.id ) );
     let otherNiches = niches.filter( niche => niche.supporters.some( user => user === thisUser.id ) === false );
 
-    let onClick = ( event ) => { 
+    let onClick = () => { 
         let newNiche = { name: nicheName, supportRequired: 4, supporters: [ thisUser.id ] };
         if( niches.some( niche => niche.name === newNiche.name ) ) {
             setNicheExists( true );
@@ -27,7 +29,12 @@ export default function UserPage( props ) {
             setNicheExists( false );
             niches.push( newNiche );
             setRooms( rooms );
+            console.log(rooms);
         }
+    }
+
+    let logout = () => {
+      history.push( "/" );
     }
 
     return (
@@ -50,8 +57,9 @@ export default function UserPage( props ) {
             <Row>
               <Col>
                 <ListGroup variant="flush">
-                  <ListGroupItem style={ { textAlign: "center" } }>Users</ListGroupItem>
+                  <ListGroupItem style={ { textAlign: "center" } }><b>People</b></ListGroupItem>
                   <ListGroupItem key={thisUser.id}>{thisUser.name}</ListGroupItem>
+                  <Button style={ { marginBottom: "10px" } } onClick={logout} type="click" >Log Out</Button>
                   { users.map( user => user.id === thisUser.id ? "" : <ListGroupItem key={user.id}>{user.name}</ListGroupItem> ) }
                 </ListGroup>
               </Col>
