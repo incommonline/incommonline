@@ -1,7 +1,7 @@
 import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './Home'
+import RoomsPageText from './RoomsPageText'
 import UserQuery from './UserQuery'
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
           <UserQuery/>
         </Route>
         <Route path="/">
-          <Home/>
+          <RoomsPageText/>
         </Route>
       </Switch>
     </Router>
