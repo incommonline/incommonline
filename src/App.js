@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Navbar } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './Home'
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <Router>
       <Navbar bg="dark" variant="dark" style={ { marginBottom: "40px" } }>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           incommon.
         </Navbar.Brand>
       </Navbar>
