@@ -59,8 +59,8 @@ export default function RoomsPageApp() {
     <Container>
         <Row> 
             <Col>
-            <Form>
-                <Form.Group onSubmit={ event => event.preventDefault() }>
+            <Form onSubmit={ event => event.preventDefault() }>
+                <Form.Group>
                     <Form.Label>Create a room or join an existing room here!</Form.Label>
                     <Form.Control placeholder="Enter the room name" onChange={ event => setRoom( event.target.value ) } />
                     
