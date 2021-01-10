@@ -95,9 +95,9 @@ export default function UserPage( props ) {
                       <ListGroup>
                         { otherNiches.map( niche => 
                             <ListGroupItem key={niche.name}>
-                                <span class="align-middle" >{niche.name}</span> 
+                                <span className="align-middle" >{niche.name}</span> 
                                 <div style={{ float: "right" } }>
-                                    <span class="align-middle" > {niche.supporters.length} / {niche.supportRequired} </span> 
+                                    <span className="align-middle" > {niche.supporters.length} / {niche.supportRequired} </span> 
                                     <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }} onClick={ event => onPush( event, niche.name ) }>Support</Button>
                                 </div>
                             </ListGroupItem> ) }
@@ -105,11 +105,11 @@ export default function UserPage( props ) {
                     </Tab>
                     <Tab eventKey="myNiches" title="My Niches" style={ { padding: "10px" } }>
                       <ListGroup> { myNiches.map( niche => 
-                        <ListGroupItem key={niche.name}> <span class="align-middle">{niche.name}</span> 
+                        <ListGroupItem key={niche.name}> <span className="align-middle">{niche.name}</span> 
                           <DropdownButton size="sm" disabled={niche.supporters.length < niche.supportRequired} style={ { float: "right", marginLeft: "15px" } } id="dropdown-basic-button" title={niche.supporters.length < niche.supportRequired ? "Awaiting more members" : "Other members"} >
                             { niche.supporters.map( supporter => <Dropdown.Item key={supporter}>{users.find( user => user.id === supporter ).name} </Dropdown.Item> ) }
                           </DropdownButton>
-                            <span style={{ float: "right" } } class="align-middle">{ niche.supporters.length >= niche.supportRequired ? "✔ " : niche.supporters.length + "/" + niche.supportRequired } </span>
+                            <span style={{ float: "right" } } className="align-middle">{ niche.supporters.length >= niche.supportRequired ? "✔ " : niche.supporters.length + "/" + niche.supportRequired } </span>
                         </ListGroupItem> ) }
                       </ListGroup>
                     </Tab>
