@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Row, Col } from 'react-bootstrap';
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
 
-function App() {
+import Home from "./Home"
+
+function Test() {
+  let { roomId } = useParams();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container>
+      <Row>
+        <Col>
+          <p>{roomId}</p> 
+        </Col>
+      </Row>
+    </Container>
+  )
 }
 
-export default App;
+export default function App() {
+  let sampleFromApi = 
+    {
+      currentUserId: "abcdefgh",
+      roomId: "hDBshCvM",
+      roomName: "Choral Reef",
+      niches: [ { nicheId: "TWwyAzRd", nicheName: "Hockey", isSupportedByUser: false, currentSupport: 3, supportRequired: 4 }, 
+                { nicheId: "biiTCxey", nicheName: "K-Pop",  isSupportedByUser: true,  currentSupport: 1, supportRequired: 4 } ],
+      subgroups: [ { subgroupId: "abcdefgh", subgroupName: "Vocal Jazz", memberIds: [ "1a2b3c4d", "2a3b4c5d" ] } ]
+    }
+
+
+  return (
+    <Router>
+      <Switch>
+        <Route path="/:roomId">
+          <Test/>
+        </Route>
+        <Route path="/">
+          <Home/>
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
