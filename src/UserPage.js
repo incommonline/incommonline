@@ -40,6 +40,18 @@ export default function UserPage( props ) {
         }
     }
 
+    let onPush = ( event, nicheName ) => {
+        event.preventDefault();
+
+        let niche = niches.find( niche => niche.name === nicheName );
+
+        if( niche.supporters.some( supporter => supporter.id === thisUser.id ) === false ) {
+            niche.supporters.push( thisUser.id );
+        }
+
+        setRooms( rooms );
+    }
+
     let logout = () => {
       history.push( "/" );
     }
@@ -84,7 +96,7 @@ export default function UserPage( props ) {
                                 <span class="align-middle" >{niche.name}</span> 
                                 <div style={{ float: "right" } }>
                                     <span class="align-middle" > {niche.supporters.length} / {niche.supportRequired} </span> 
-                                    <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }}>Support</Button>
+                                    <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }} onClick={ event => onPush( event, niche.name ) }>Support</Button>
                                 </div>
                             </ListGroupItem> ) }
                       </ListGroup>
