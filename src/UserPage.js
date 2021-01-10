@@ -79,7 +79,14 @@ export default function UserPage( props ) {
                     <Tab eventKey="unsupportedNiches" title="Explore" style={ { padding: "10px" } }>
                       <p style={ { padding: "15px 0 0 0"} }>Here are listed the niches that need support!</p>
                       <ListGroup>
-                        { otherNiches.map( niche => <ListGroupItem key={niche.name}>{niche.name} <span style={{ float: "right" } }> {niche.supporters.length} / {niche.supportRequired} </span></ListGroupItem> ) }
+                        { otherNiches.map( niche => 
+                            <ListGroupItem key={niche.name}>
+                                <span class="align-middle" >{niche.name}</span> 
+                                <div style={{ float: "right" } }>
+                                    <span class="align-middle" > {niche.supporters.length} / {niche.supportRequired} </span> 
+                                    <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }}>Support</Button>
+                                </div>
+                            </ListGroupItem> ) }
                       </ListGroup>
                     </Tab>
                     <Tab eventKey="myNiches" title="My Niches" style={ { padding: "10px" } }>
