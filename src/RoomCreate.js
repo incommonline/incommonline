@@ -39,15 +39,24 @@ function onRoomCreate( event, roomName, createRoom, onFailure = () => {}, onSucc
     }
 }
 
-
 export default function RoomCreate() {
     let history = useHistory();
 
-    let [roomContent,   setRoom]   = useState( "" ); 
+    let [roomContent,   setRoom]          = useState( "" ); 
     let [joinFailed,    setJoinFailed]    = useState( false );
     let [createdId,     setCreatedId]     = useState( null );
     let [createdFailed, setCreatedFailed] = useState( null );
-    let [rooms = [], setRooms] = useLocalStorage("rooms");
+    let [rooms = [],    setRooms]         = useLocalStorage( "rooms" );
+
+    let createRoom = (id, name) => {
+        let room = { id: id, name: name };
+        if ( rooms.includes( room ) === false ) {
+            setRooms( [...rooms, room] )
+            return room;
+        } else {
+            return { error: "room exists" };
+        }
+    };
 
     return (
     <Container>
@@ -64,14 +73,7 @@ export default function RoomCreate() {
                 { createdId ? <p style={ { color: "green" } }>Created a room at <span href={createdId}>incommon.online/{createdId}</span> </p> : "" }
 
                 <Button variant="primary" className="mr-2" onClick={ event => { setJoinFailed( false ); setCreatedFailed( false ); setCreatedId( null ); onRoomJoin( event, roomContent, () => setJoinFailed( true ), id => history.push( '/' + id ) ); } }>Join a room</Button>
-                <Button variant="primary" className="mr-2" onClick={ event => { setJoinFailed( false ); setCreatedFailed( false ); setCreatedId( null ); onRoomCreate( event, roomContent, 
-                (id, name) => {
-                    let room = {id: id, name: name};
-                    if (!rooms.includes(room)) {
-                        setRooms([...rooms, room])
-                    }
-                },
-                     () => setCreatedFailed( true ), ( id ) => setCreatedId( id ) ) } }>Create a room</Button>
+                <Button variant="primary" className="mr-2" onClick={ event => { setJoinFailed( false ); setCreatedFailed( false ); setCreatedId( null ); onRoomCreate( event, roomContent, createRoom, () => setCreatedFailed( true ), ( id ) => setCreatedId( id ) ) } }>Create a room</Button>
             </Form>
             </Col>
         </Row> 
