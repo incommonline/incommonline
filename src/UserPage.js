@@ -10,6 +10,7 @@ export default function UserPage( props ) {
     let [rooms = [], setRooms] = useLocalStorage( "rooms" );
     let [nicheName, setNicheName] = useState();
     let [nicheExists, setNicheExists] = useState( false );
+    let [sessions = [], setSessions] = useLocalStorage( "sessions" );
 
     let room  = rooms.find( room => room.id === roomId );
 
@@ -43,8 +44,6 @@ export default function UserPage( props ) {
     }
 
     let onPush = ( event, nicheName ) => {
-        event.preventDefault();
-
         let niche = niches.find( niche => niche.name === nicheName );
 
         if( niche.supporters.some( supporter => supporter.id === thisUser.id ) === false ) {
@@ -55,7 +54,8 @@ export default function UserPage( props ) {
     }
 
     let logout = () => {
-      history.push( "/" );
+        setSessions( sessions.filter( session => (session.roomId === room.id && session.userId === thisUser.id) === false ) );
+        history.push( "/" );
     }
 
     return (
@@ -71,7 +71,7 @@ export default function UserPage( props ) {
                   { nicheExists ? <p style={ { color: "red", fontSize: "small" } }>Niche already exists.</p> : "" }
                 </Form.Group>
 
-                <Button style={ { marginBottom: "10px" } } onClick={onClick} type="click" >Add</Button>
+                <Button style={ { marginBottom: "10px" } } onClick={onClick} type="submit" >Add</Button>
               </Form>
               </Card>
             </Row>
@@ -98,7 +98,7 @@ export default function UserPage( props ) {
                                 <span className="align-middle" >{niche.name}</span> 
                                 <div style={{ float: "right" } }>
                                     <span className="align-middle" > {niche.supporters.length} / {niche.supportRequired} </span> 
-                                    <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }} onClick={ event => onPush( event, niche.name ) }>Support</Button>
+                                    <Button variant="primary" size="sm" style={{ float: "right", marginLeft: "15px" }} type="submit" onClick={ event => onPush( event, niche.name ) }>Support</Button>
                                 </div>
                             </ListGroupItem> ) }
                       </ListGroup>

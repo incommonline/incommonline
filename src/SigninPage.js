@@ -1,6 +1,6 @@
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { Base64 } from 'base64-string';
 
@@ -21,8 +21,11 @@ export default function SigninPage() {
 
   let [currentName, setCurrentName] = useState( "" );
   let [rooms = [], setRooms] = useLocalStorage( "rooms" );
+  let [sessions = [], setSessions] = useLocalStorage( "sessions" );
 
   let room = rooms.find( room => room.id === roomId );
+
+  let [currentSession, setCurrentSession] = useState( sessions.find( session => session.roomId === room.id ) );
 
   if( room === undefined ) { 
     history.push( '/' ); return "";
@@ -44,12 +47,11 @@ export default function SigninPage() {
       setRooms( rooms );
     } 
 
-    history.push( window.location.pathname + '?userid=' + foundUser.id );
+    setSessions( [...sessions, { userId: foundUser.id, roomId: room.id }] );
+    setCurrentSession( { userId: foundUser.id, roomId: room.id } );
   }
 
-  let userId = query.get( 'userid' );
-
-  if( !userId ) {
+  if( currentSession === undefined ) {
     return (
       <Container>
         <Row>
@@ -64,7 +66,7 @@ export default function SigninPage() {
     );
   } else {
     return (
-      <UserPage userId={userId} roomId={roomId}/>
+      <UserPage userId={currentSession.userId} roomId={currentSession.roomId}/>
     );
   }
 }
