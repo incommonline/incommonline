@@ -4,12 +4,21 @@ export function getRoomName( roomId ) {
 }
   
 export function getRoomDetails( roomId, userId ) {
-    return {
-      currentUserId: userId,
-      roomId: roomId,
-      roomName: "Choral Reef",
-      niches: [ { nicheId: "TWwyAzRd", nicheName: "Hockey", isSupportedByUser: false, currentSupport: 3, supportRequired: 4 }, 
-                { nicheId: "biiTCxey", nicheName: "K-Pop",  isSupportedByUser: true,  currentSupport: 1, supportRequired: 4 } ],
-      subgroups: [ { subgroupId: "abcdefgh", subgroupName: "Vocal Jazz", memberIds: [ "1a2b3c4d", "2a3b4c5d" ] } ]
-    };
+  return {
+    currentUserId: userId,
+    currentUserName: "Dominic S.",
+    otherUsers: [ "Weiyoung", "Bereket" ],
+    roomId: roomId,
+    roomName: "Choral Reef",
+    myNiches: [ { nicheName: "K-Pop", currentSupport: 1, supportRequired: 4, memberIds: null }, { nicheId: "abcdefgh", nicheName: "Vocal Jazz", currentSupport: 3, supportRequired: 3, members: [ "Weiyoung", "Dominic S.", "Bereket" ] } ],
+    otherNiches: [ { nicheName: "Hockey", currentSupport: 3, supportRequired: 4 } ]
+  };
+}
+
+export function getRoomIdFromName( roomName ) {
+  return { id: "abc123" };
+}
+
+export function createRoom( roomId, roomName ) {
+  return {};
 }

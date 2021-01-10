@@ -1,22 +1,17 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useState } from 'react' 
-import { useHistory } from 'react-router-dom'
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Base64 } from 'base64-string';
-
-function getRoomIdFromName( roomName ) {
-    return { id: "abc123", error: null };
-}
- 
-function createRoom( roomId, roomName ) {
-    return { error: null };
-}
+import { getRoomIdFromName, createRoom } from './SkeletonApi'
 
 function onRoomJoin( event, roomName, onFailure = () => {}, onSuccess = () => {} ) {
     event.preventDefault();
 
+    if( roomName === "" ) { return; }
+
     let error = getRoomIdFromName( roomName ).error;
 
-    if( error === null ) {
+    if( error == null ) {
         onSuccess( getRoomIdFromName( roomName ).id )
     } else {
         onFailure( error );
@@ -26,6 +21,8 @@ function onRoomJoin( event, roomName, onFailure = () => {}, onSuccess = () => {}
 function onRoomCreate( event, roomName, onFailure = () => {}, onSuccess = () => {} ) {
     event.preventDefault();
 
+    if( roomName === "" ) { return; }
+
     const base64_encoder = new Base64();
     const date = new Date();
 
@@ -34,7 +31,7 @@ function onRoomCreate( event, roomName, onFailure = () => {}, onSuccess = () => 
     let roomCreated = createRoom( roomId, roomName );
     let error = roomCreated.error;
 
-    if( error === null ) {
+    if( error == null ) {
         onSuccess( roomId );
     } else {
         onFailure( error );
@@ -62,7 +59,7 @@ export default function RoomCreate() {
 
                 { joinFailed ? <p style={ { color: "red" } }>No room with this name exists.</p> : "" }
                 { createdFailed ? <p style={ { color: "red" } }>A room with this name already exists.</p> : "" }
-                { createdId ? <p style={ { color: "green" } }>Created a room at <href>incommon.online/{createdId}</href> </p> : "" }
+                { createdId ? <p style={ { color: "green" } }>Created a room at <span href={createdId}>incommon.online/{createdId}</span> </p> : "" }
 
                 <Button variant="primary" className="mr-2" onClick={ event => { setJoinFailed( false ); setCreatedFailed( false ); setCreatedId( null ); onRoomJoin( event, roomContent, () => setJoinFailed( true ), id => history.push( '/' + id ) ); } }>Join a room</Button>
                 <Button variant="primary" className="mr-2" onClick={ event => { setJoinFailed( false ); setCreatedFailed( false ); setCreatedId( null ); onRoomCreate( event, roomContent, () => setCreatedFailed( true ), ( id ) => setCreatedId( id ) ) } }>Create a room</Button>

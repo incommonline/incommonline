@@ -2,24 +2,11 @@ import { Container, Row, Col, Form, ListGroup, ListGroupItem, Tabs, Tab, Card } 
 import { useParams, useLocation, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 
-import { getRoomName } from './SkeletonApi'
+import { getRoomName, getRoomDetails } from './SkeletonApi'
 
 /* from react-router example */
 function useQuery() {
   return new URLSearchParams(useLocation().search);
-}
-
-
-function getRoomDetails( roomId, userId ) {
-  return {
-    currentUserId: userId,
-    currentUserName: "Dominic S.",
-    otherUsers: [ "Weiyoung", "Bereket" ],
-    roomId: roomId,
-    roomName: "Choral Reef",
-    myNiches: [ { nicheName: "K-Pop", currentSupport: 1, supportRequired: 4, memberIds: null }, { nicheId: "abcdefgh", nicheName: "Vocal Jazz", currentSupport: 3, supportRequired: 3, members: [ "Weiyoung", "Dominic S.", "Bereket" ] } ],
-    otherNiches: [ { nicheName: "Hockey", currentSupport: 3, supportRequired: 4 } ]
-  };
 }
 
 function UserRoom( props ) {
