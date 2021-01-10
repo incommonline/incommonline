@@ -1,5 +1,5 @@
 import { Container, Row, Col, Form } from 'react-bootstrap';
-import { useParams, useLocation, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { Base64 } from 'base64-string';
