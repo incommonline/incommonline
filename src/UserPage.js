@@ -21,16 +21,20 @@ export default function UserPage( props ) {
     let myNiches = niches.filter( niche => niche.supporters.some( user => user === thisUser.id ) );
     let otherNiches = niches.filter( niche => niche.supporters.some( user => user === thisUser.id ) === false );
 
-    console.log(niches[0].supporters);
+    let onClick = ( event ) => { 
+        event.preventDefault();
 
+        if( nicheName === undefined ) { return; }
 
-    let onClick = () => { 
-        let newNiche = { name: nicheName, supportRequired: 4, supporters: [ thisUser.id ] };
+        let newNiche = { name: nicheName.trim(), supportRequired: 4, supporters: [ thisUser.id ] };
+
+        if( nicheName === "" ) { return; }
+
         if( niches.some( niche => niche.name === newNiche.name ) ) {
             setNicheExists( true );
         } else {
             setNicheExists( false );
-            niches.push( newNiche );
+            niches.unshift( newNiche );
             setRooms( rooms );
             console.log(rooms);
         }

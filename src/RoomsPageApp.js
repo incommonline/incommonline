@@ -69,7 +69,6 @@ export default function RoomsPageApp() {
                     { createdId ? <p style={ { color: "green", fontSize: "small" } }>Created a room at <a href={createdId}>{window.location.host}/{createdId}</a>. Share this with your friends!</p> : "" }
                 </Form.Group>
 
-                
                 <Button variant="primary" className="mr-2" onClick={ onRoomJoin }>Join a room</Button>
                 <Button variant="primary" className="mr-2" onClick={ onRoomCreate }>Create a room</Button>
             </Form>
