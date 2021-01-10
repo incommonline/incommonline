@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Base64 } from 'base64-string';
 import { useLocalStorage } from '@rehooks/local-storage';
 
-const stringHash = require("string-hash");
+const stringHash = require( "string-hash" );
 
 export default function RoomsPageApp() {
     let history = useHistory();
@@ -55,7 +55,6 @@ export default function RoomsPageApp() {
             setCreatedFailed( true );
         }
     }
-
     return (
     <Container>
         <Row> 

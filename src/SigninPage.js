@@ -6,7 +6,7 @@ import { Base64 } from 'base64-string';
 
 import UserPage from './UserPage';
 
-const stringHash = require("string-hash");
+const stringHash = require( "string-hash" );
 
 /* from react-router example */
 function useQuery() {
@@ -38,7 +38,7 @@ export default function SigninPage() {
       const date = new Date();
   
       let userId = base64_encoder.encode( stringHash( currentName + date.getMilliseconds ) ).slice( 5, 11 ); 
-      foundUser = { id: userId, name: currentName, niches: [] };
+      foundUser = { id: userId, name: currentName };
       room.users.push( foundUser );
 
       setRooms( rooms );
